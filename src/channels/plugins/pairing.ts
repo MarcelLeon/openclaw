@@ -7,17 +7,28 @@ import {
   listChannelPlugins,
   normalizeChannelId,
 } from "./index.js";
+import { telegramPairingAdapter } from "./onboarding/telegram.js";
+
+const FALLBACK_PAIRING_ADAPTERS: Record<string, ChannelPairingAdapter> = {
+  telegram: telegramPairingAdapter,
+};
 
 export function listPairingChannels(): ChannelId[] {
   // Channel docking: pairing support is declared via plugin.pairing.
-  return listChannelPlugins()
+  const pluginChannels = listChannelPlugins()
     .filter((plugin) => plugin.pairing)
     .map((plugin) => plugin.id);
+  const fallbackChannels = Object.keys(FALLBACK_PAIRING_ADAPTERS) as ChannelId[];
+  return [...new Set<ChannelId>([...pluginChannels, ...fallbackChannels])];
 }
 
 export function getPairingAdapter(channelId: ChannelId): ChannelPairingAdapter | null {
   const plugin = getChannelPlugin(channelId);
-  return plugin?.pairing ?? null;
+  const fromPlugin = plugin?.pairing ?? null;
+  if (fromPlugin) {
+    return fromPlugin;
+  }
+  return FALLBACK_PAIRING_ADAPTERS[channelId] ?? null;
 }
 
 export function requirePairingAdapter(channelId: ChannelId): ChannelPairingAdapter {

@@ -217,7 +217,7 @@ function normalizeAllowEntry(channel: PairingChannel, entry: string): string {
   }
   const adapter = getPairingAdapter(channel);
   const normalized = adapter?.normalizeAllowEntry ? adapter.normalizeAllowEntry(trimmed) : trimmed;
-  return String(normalized).trim();
+  return String(normalized ?? "").trim();
 }
 
 export async function readChannelAllowFromStore(

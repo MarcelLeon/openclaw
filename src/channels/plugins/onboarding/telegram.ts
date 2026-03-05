@@ -2,6 +2,7 @@ import type { OpenClawConfig } from "../../../config/config.js";
 import type { DmPolicy } from "../../../config/types.js";
 import type { WizardPrompter } from "../../../wizard/prompts.js";
 import type { ChannelOnboardingAdapter, ChannelOnboardingDmPolicy } from "../onboarding-types.js";
+import type { ChannelPairingAdapter } from "../types.adapters.js";
 import { formatCliCommand } from "../../../cli/command-format.js";
 import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "../../../routing/session-key.js";
 import {
@@ -353,4 +354,23 @@ export const telegramOnboardingAdapter: ChannelOnboardingAdapter = {
       telegram: { ...cfg.channels?.telegram, enabled: false },
     },
   }),
+};
+
+export const telegramPairingAdapter: ChannelPairingAdapter = {
+  idLabel: "Telegram user id or username",
+  normalizeAllowEntry: (entry: string) => {
+    const trimmed = entry.trim();
+    if (!trimmed) {
+      return "";
+    }
+    // Support telegram:/tg: prefixes and normalize usernames.
+    let normalized = trimmed.replace(/^(telegram|tg):/i, "").trim();
+    if (!normalized) {
+      return "";
+    }
+    if (!normalized.startsWith("@") && !/^-?\d+$/.test(normalized)) {
+      normalized = `@${normalized}`;
+    }
+    return normalized.toLowerCase();
+  },
 };
