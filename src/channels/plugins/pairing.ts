@@ -1,6 +1,5 @@
 import type { OpenClawConfig } from "../../config/config.js";
 import type { RuntimeEnv } from "../../runtime.js";
-import type { ChannelPairingAdapter } from "./types.js";
 import {
   type ChannelId,
   getChannelPlugin,
@@ -8,6 +7,7 @@ import {
   normalizeChannelId,
 } from "./index.js";
 import { telegramPairingAdapter } from "./onboarding/telegram.js";
+import type { ChannelPairingAdapter } from "./types.js";
 
 const FALLBACK_PAIRING_ADAPTERS: Record<string, ChannelPairingAdapter> = {
   telegram: telegramPairingAdapter,
