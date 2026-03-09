@@ -1,0 +1,34 @@
+{
+  "channels": {
+    "kim": {
+      "enabled": true,
+      "appKey": "YOUR_KIM_APP_KEY",
+      "secretKey": "YOUR_KIM_SECRET_KEY",
+      "environment": "production",
+      "callbackUrl": "http://YOUR_GATEWAY_HOST:18789/webhook/kim",
+      "callbackToken": "YOUR_64_HEX_RANDOM_TOKEN",
+      "replyUsernamesById": {
+        "872858283717": "your-real-kim-username"
+      },
+      "name": "OpenClaw Kim Assistant",
+      
+      "dm": {
+        "policy": "pairing",
+        "allowFrom": []
+      },
+      
+      "groupPolicy": "allowlist",
+      "allowedGroups": []
+    }
+  },
+  
+  "_comments": {
+    "appKey": "从 Kim 开放平台获取的 AppKey",
+    "secretKey": "从 Kim 开放平台获取的 SecretKey",
+    "environment": "production（生产环境）或 staging（测试环境）",
+    "authentication": "使用 AccessToken Bearer 认证，Token 会自动获取和刷新",
+    "apiGateway": "生产环境: https://is-gateway.corp.kuaishou.com",
+    "permissions": "需要申请的 API 接口：message/send, callback/info, bot/info",
+    "pairing": "dm.policy=pairing 时，通过 openclaw pairing approve kim <code> 完成授权"
+  }
+}

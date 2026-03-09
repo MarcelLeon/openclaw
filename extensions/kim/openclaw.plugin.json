@@ -1,0 +1,22 @@
+{
+  "id": "kim",
+  "channels": [
+    "kim"
+  ],
+  "meta": {
+    "label": "Kim",
+    "selectionLabel": "Kim (Enterprise Messaging)",
+    "docsPath": "/channels/kim",
+    "docsLabel": "kim",
+    "blurb": "Enterprise messaging platform with secure authentication and webhook integration.",
+    "systemImage": "building.columns",
+    "selectionDocsPrefix": "",
+    "selectionDocsOmitLabel": true,
+    "selectionExtras": ["https://openclaw.ai"]
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}
